@@ -30,3 +30,22 @@ Here are some Operators in SQL
 
 -- using NOT EQUAL logic in WHERE
 -- SELECT "title", "format" FROM longlist WHERE "format" != "hardcover";
+
+
+-- the NULL
+-- meaning no value, it does not exist
+-- IS NULL
+-- IS NOT NULL
+-- sample codes:
+-- SELECT "title" , "translator" FROM "longlist"
+-- WHERE "translator" IS NULL;
+-- SELECT "title" , "translator" FROM "longlist"
+-- WHERE "translator" IS NOT NULL;
+
+-- the LIKE to match
+-- commonly used with wildcards % and _
+-- SELECT "title" FROM "longlist"
+-- WHERE "title" LIKE '%love%';
+
+
+-- continue @ 40 mins
