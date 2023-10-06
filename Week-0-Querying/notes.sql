@@ -9,13 +9,13 @@
 -- in this course, we will use the longlist.db ()
 
 -- the SELECT statement
--- SELECT * FROM longlist;
--- SELECT "title" FROM longlist;
--- SELECT "title", "author" FROM longlist;
+SELECT * FROM longlist;
+SELECT "title" FROM longlist;
+SELECT "title", "author" FROM longlist;
 
 -- using the LIMIT
--- SELECT * FROM longlist LIMIT 10;
--- SELECT "title" FROM longlist LIMIT 5;
+SELECT * FROM longlist LIMIT 10;
+SELECT "title" FROM longlist LIMIT 5;
 
 
 -- the WHERE statement
@@ -29,7 +29,7 @@ Here are some Operators in SQL
 */
 
 -- using NOT EQUAL logic in WHERE
--- SELECT "title", "format" FROM longlist WHERE "format" != "hardcover";
+SELECT "title", "format" FROM longlist WHERE "format" != "hardcover";
 
 
 -- the NULL
@@ -37,15 +37,51 @@ Here are some Operators in SQL
 -- IS NULL
 -- IS NOT NULL
 -- sample codes:
--- SELECT "title" , "translator" FROM "longlist"
--- WHERE "translator" IS NULL;
--- SELECT "title" , "translator" FROM "longlist"
--- WHERE "translator" IS NOT NULL;
+SELECT "title" , "translator" FROM "longlist"
+WHERE "translator" IS NULL;
+SELECT "title" , "translator" FROM "longlist"
+WHERE "translator" IS NOT NULL;
 
 -- the LIKE to match
 -- commonly used with wildcards % and _
--- SELECT "title" FROM "longlist"
--- WHERE "title" LIKE '%love%';
+SELECT "title" FROM "longlist"
+WHERE "title" LIKE '%love%';
 
 
 -- continue @ 40 mins
+
+-- using single char _
+SELECT "title" FROM longlist
+WHERE "title" LIKE 'P_re';
+
+-- Range Condition using > < >= <= operators
+SELECT "title", "year" FROM longlist
+WHERE "year" > 2020;
+
+-- using BETWEEN ... AND ...
+SELECT "title", "year" FROM longlist
+WHERE "year" BETWEEN 2019 and 2020;
+
+-- another example 
+SELECT "title", "rating" FROM longlist
+WHERE "rating" > 4.0
+ORDER BY "rating" DESC;
+
+-- refining the code above...
+SELECT "title", "rating", "votes" FROM longlist
+WHERE "rating" > 4.0 AND "votes" > 5000
+ORDER BY "votes" DESC;
+
+
+-- ORDER BY keyword
+-- the most famous/best-selling books on our list
+SELECT "title", "rating", "votes" FROM longlist
+ORDER BY "votes" DESC
+LIMIT 10;
+-- now the highest-rated books:
+SELECT "title", "rating", "votes" FROM longlist
+ORDER BY "votes", "rating" DESC
+LIMIT 10;
+
+
+-- continue @ 57 mins
