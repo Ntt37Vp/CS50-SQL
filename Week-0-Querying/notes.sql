@@ -79,9 +79,51 @@ SELECT "title", "rating", "votes" FROM longlist
 ORDER BY "votes" DESC
 LIMIT 10;
 -- now the highest-rated books:
-SELECT "title", "rating", "votes" FROM longlist
-ORDER BY "votes", "rating" DESC
-LIMIT 10;
+-- SELECT "title", "rating", "votes" FROM longlist
+-- ORDER BY "votes", "rating" DESC
+-- LIMIT 10;
 
 
 -- continue @ 57 mins
+
+-- my code above is incorrect. The correct way to do it:
+SELECT "title", "rating", "votes" FROM longlist
+ORDER BY "votes" DESC, "rating" DESC
+LIMIT 10;
+
+-- the aggregate functions COUNT, AVG, MIN, MAX, SUM
+-- COUNT
+SELECT COUNT(*)
+FROM longlist;
+-- AVG
+SELECT AVG("rating")
+FROM longlist;
+-- SUM
+SELECT SUM("votes") 
+FROM longlist;
+-- MIN
+SELECT MIN("rating")
+FROM longlist;
+-- MAX
+SELECT MAX("rating")
+FROM longlist;
+
+-- using ROUND func 
+SELECT ROUND(AVG("rating"))
+FROM longlist;
+-- specify 2 decimals:
+SELECT ROUND(AVG("rating"), 2)
+FROM longlist;
+-- using AS alias
+SELECT ROUND(AVG("rating"), 2) AS Average_rating
+FROM longlist;
+
+-- using DISTINCT
+SELECT DISTINCT "publisher"
+FROM longlist;
+
+-- getting Top 10 Publishers and their # of titles
+SELECT "publisher", COUNT("title")
+FROM longlist
+GROUP BY "publisher" ORDER BY COUNT("title") DESC LIMIT 10;
+
