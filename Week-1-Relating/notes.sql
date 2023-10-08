@@ -9,9 +9,5 @@
 -- uses cross foot notation
 
 
-
-
-
-
-
--- stop @
+-- stop @ 13 mins
+]
