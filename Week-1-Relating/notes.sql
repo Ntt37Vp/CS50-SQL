@@ -105,3 +105,18 @@ ON publishers.id=books.publisher_id;
 
 
 -- continue @ 1H 1M
+
+-- the NATURAL JOIN
+SELECT *
+FROM books
+NATURAL JOIN publishers;
+
+-- SETS
+-- values that appear in both tables
+-- example: 
+-- authors INTERSECT translators
+
+-- if either of the two SETS, it's a UNION
+-- W3: The UNION operator is used to combine the result-set of two or more SELECT statements.
+
+-- continue @ 1H 20M
