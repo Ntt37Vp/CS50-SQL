@@ -72,4 +72,36 @@ WHERE "id" = (
 );
 -- final output that we are looking for: Olga Tokarczuk
 
--- stopped @ 45mins
+-- continue @ 45mins
+
+-- the IN keyword
+-- to find a value INSIDE a set
+-- example:
+-- get author's id
+SELECT "id" FROM authors
+WHERE "name" = 'Fernanda Melchor';
+-- then nest into the authored
+SELECT "book_id" FROM authored
+WHERE "author_id" = (
+    SELECT "id" FROM authors
+    WHERE "name" = 'Fernanda Melchor'
+);
+-- the output is 14 & 48, nest it inside the new query using IN
+SELECT "title" FROM books
+WHERE "id" IN (
+    SELECT "book_id" FROM authored
+    WHERE "author_id" = (
+        SELECT "id" FROM authors
+        WHERE "name" = 'Fernanda Melchor'
+    )
+);
+
+
+-- JOINS!
+SELECT books.title, publishers.publisher
+FROM books
+JOIN publishers 
+ON publishers.id=books.publisher_id;
+
+
+-- continue @ 1H 1M
