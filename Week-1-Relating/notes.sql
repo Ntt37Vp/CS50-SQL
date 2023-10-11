@@ -120,3 +120,144 @@ NATURAL JOIN publishers;
 -- W3: The UNION operator is used to combine the result-set of two or more SELECT statements.
 
 -- continue @ 1H 20M
+
+-- either Translators or Authors
+SELECT "name" FROM translators;
+SELECT "name" FROM authors;
+-- combine the two sets using UNION:
+SELECT "name" FROM translators
+UNION
+SELECT "name" FROM authors;
+
+-- creating a list from authors
+SELECT 
+"author" AS "profession",
+"name"
+FROM authors;
+-- combining or UNION
+SELECT 
+"author" AS "profession",
+"name"
+FROM authors
+UNION
+SELECT "translator" AS "profession",
+"name"
+FROM translators;
+
+-- using INTERSECT
+SELECT "name" FROM authors
+INTERSECT
+SELECT "name" FROM translators;
+-- output: Ngũgĩ wa Thiong'o
+
+-- using EXCEPT
+SELECT "name" FROM authors
+EXCEPT
+SELECT "name" FROM translators;
+
+-- 
+SELECT "book_id" FROM translated
+WHERE "translator_id" = (
+    SELECT "id" FROM translators
+    WHERE "name" = 'Sophie Hughes'
+)
+INTERSECT
+SELECT "book_id" FROM translated
+WHERE "translator_id" = (
+    SELECT "id" translators
+    WHERE "name" = 'Margaret Jull Costa'
+);
+-- output should be book_id: 50
+
+
+SELECT AVG("rating") FROM ratings;
+-- output: 3.83644
+-- only spits out the avg for all books
+-- to get the book rating avg
+SELECT 
+    book_id,
+    AVG("rating") AS "Average rating"
+FROM ratings
+GROUP BY book_id;
+-- only showing the top 10
+SELECT 
+    book_id,
+    ROUND(AVG("rating"), 2) AS "Average rating"
+FROM ratings
+GROUP BY book_id
+ORDER BY "Average rating" DESC
+LIMIT 10;
+-- now I feel like adding the name of the books into this query...
+SELECT 
+    ratings.book_id,
+    books.title,
+    ROUND(AVG("rating"), 2) AS "Average rating"
+FROM ratings
+INNER JOIN books 
+ON ratings.book_id=books.id
+GROUP BY book_id
+ORDER BY "Average rating" DESC
+LIMIT 10;
+-- OUTPUT IS AWESOME
+-- +---------+---------------------------------------+----------------+
+-- | book_id |                 title                 | Average rating |
+-- +---------+---------------------------------------+----------------+
+-- | 42      | The Eighth Life                       | 4.51           |
+-- | 22      | A New Name: Septology VI-VII          | 4.5            |
+-- | 45      | The Other Name: Septology I-II        | 4.19           |
+-- | 65      | The Years                             | 4.18           |
+-- | 28      | When We Cease to Understand the World | 4.14           |
+-- | 11      | Still Born                            | 4.14           |
+-- | 71      | The Flying Mountain                   | 4.11           |
+-- | 18      | Elena Knows                           | 4.09           |
+-- | 48      | Hurricane Season                      | 4.08           |
+-- | 5       | Time Shelter                          | 4.06           |
+-- +---------+---------------------------------------+----------------+
+
+-- using HAVING to filter ROWS
+SELECT
+    "book_id",
+    ROUND(AVG("rating"), 2) AS "Average Rating"
+FROM ratings
+GROUP BY "book_id"
+HAVING "Average Rating" > 4.0;
+-- let's say I wanted to add the # of reviews/ratings
+SELECT
+    "book_id",
+    COUNT("rating") AS "Review Count",
+    ROUND(AVG("rating"), 2) AS "Average Rating"
+FROM ratings
+GROUP BY "book_id"
+HAVING "Average Rating" > 4.0
+ORDER BY "Review Count" DESC;
+-- let's add the title of the book_ids haha
+SELECT
+    ratings.book_id,
+    books.title,
+    COUNT("rating") AS "Review Count",
+    ROUND(AVG("rating"), 2) AS "Average Rating"
+FROM ratings
+INNER JOIN books
+ON ratings.book_id=books.id
+GROUP BY "book_id"
+HAVING "Average Rating" > 4.0
+ORDER BY "Review Count" DESC;
+-- the AWESOME OUTPUT:
+-- +---------+---------------------------------------+--------------+----------------+
+-- | book_id |                 title                 | Review Count | Average Rating |
+-- +---------+---------------------------------------+--------------+----------------+
+-- | 28      | When We Cease to Understand the World | 23251        | 4.14           |
+-- | 48      | Hurricane Season                      | 22551        | 4.08           |
+-- | 65      | The Years                             | 16888        | 4.18           |
+-- | 42      | The Eighth Life                       | 16350        | 4.51           |
+-- | 18      | Elena Knows                           | 8212         | 4.09           |
+-- | 11      | Still Born                            | 7647         | 4.14           |
+-- | 25      | The Books of Jacob                    | 5664         | 4.05           |
+-- | 20      | More Than I Love My Life              | 3705         | 4.04           |
+-- | 5       | Time Shelter                          | 3142         | 4.06           |
+-- | 10      | Pyre                                  | 1302         | 4.04           |
+-- | 45      | The Other Name: Septology I-II        | 1245         | 4.19           |
+-- | 22      | A New Name: Septology VI-VII          | 479          | 4.5            |
+-- | 71      | The Flying Mountain                   | 323          | 4.11           |
+-- +---------+---------------------------------------+--------------+----------------+
+
