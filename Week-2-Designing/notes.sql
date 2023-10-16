@@ -121,3 +121,43 @@ DROP TABLE "Stations";
 
 -- instead of using sqlite cli, let's create a SCHEMA file
 -- schema.sql
+
+-- run/read the schema file
+-- .read schema.sql
+
+-- Table Constraints
+-- like Primary keys must not be NULL
+-- improving the schema file:
+CREATE TABLE "riders" (
+    "id" INTEGER,
+    "name" TEXT,
+    PRIMARY KEY ("id")
+);
+CREATE TABLE "stations" (
+    "id" INTEGER,
+    "name" TEXT,
+    "line" TEXT,
+    PRIMARY KEY("id")
+);
+
+
+-- Column Constraints
+CHECK
+DEFAULT
+NOT NULL
+UNIQUE
+-- improving the schema file:
+CREATE TABLE "riders" (
+    "id" INTEGER,
+    "name" TEXT,
+    PRIMARY KEY ("id")
+);
+CREATE TABLE "stations" (
+    "id" INTEGER,
+    "name" TEXT NOT NULL UNIQUE,
+    "line" TEXT,
+    PRIMARY KEY("id")
+);
+
+
+-- Altering Tables
