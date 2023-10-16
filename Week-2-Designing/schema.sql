@@ -39,21 +39,24 @@
 
 
 -- improving the schema file using the COLUMN CONSTRAINTS
-CREATE TABLE "riders" (
+CREATE TABLE "cards" (
     "id" INTEGER,
-    "name" TEXT,
     PRIMARY KEY ("id")
 );
--- added NOT NULL in station name
 CREATE TABLE "stations" (
     "id" INTEGER,
     "name" TEXT NOT NULL UNIQUE,
     "line" TEXT NOT NULL,
     PRIMARY KEY("id")
 );
-CREATE TABLE "visits" (
-    "rider_id" INTEGER,
+CREATE TABLE "swipes" (
+    "id" INTEGER,
+    "card_id" INTEGER,
     "station_id" INTEGER,
-    FOREIGN KEY("rider_key") REFERENCES "riders"("id"),
+    "type" TEXT NOT NULL CHECK("type" IN ('Enter', 'Exit', 'Deposit')),
+    "datetime" NUMERIC NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "amount" NUMERIC NOT NULL CHECK("amount" != 0),
+    PRIMARY KEY("id"),
+    FOREIGN KEY("card_id") REFERENCES "cards"("id"),
     FOREIGN KEY("station_id") REFERENCES "stations"("id")
 );

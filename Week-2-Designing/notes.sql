@@ -161,3 +161,25 @@ CREATE TABLE "stations" (
 
 
 -- Altering Tables
+
+-- improving our Design here, instead of using RIDERS, we will consider CARDS
+-- I will drop Riders table
+DROP TABLE "riders"
+
+-- altering using ALTER TABLE
+-- ADD
+ALTER TABLE table_name
+ADD column_name datatype; 
+-- DROP Column
+ALTER TABLE table_name
+DROP COLUMN column_name; 
+-- RENAME
+ALTER TABLE table_name
+RENAME COLUMN old_name to new_name; 
+
+-- Let's rename "visits" table into "swipes"
+ALTER TABLE "visits"
+RENAME TO "swipes";
+-- adding column "types" to "swipes"
+ALTER TABLE "swipes"
+ADD COLUMN "type" TEXT;
