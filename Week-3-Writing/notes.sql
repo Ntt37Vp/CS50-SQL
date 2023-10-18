@@ -55,3 +55,43 @@ SELECT ("title", "accession_num", "acquired")
 FROM temp;
 -- once the data is transferred to the official table, drop the temp table
 -- DROP TABLE temp;
+
+
+-- DELETING
+-- syntax:
+DELETE FROM table_name WHERE condition;
+-- on the actual data:
+DELETE FROM collections
+WHERE "title" = 'SpringOuting';
+-- effect/output: 
+-- 3  | SpringOuting  was deleted from the table
+-- statement below should delete NULL val in acquired:
+DELETE FROM collections
+WHERE "acquired" IS NULL;
+-- deleting based on the acquired date condition
+DELETE FROM collections
+WHERE "acquired" < '1909-01-01';
+
+
+-- FOREIGN KEY Constraints
+-- rows/values used/referenced in other tables cannot be deleted immediately
+DELETE FROM "created" WHERE "artist_id" = (
+    SELECT "id" FROM "artists" WHERE "name" = 'Unidentified artist'
+);
+DELETE FROM "artist" WHERE "name"='Unidentified artist';
+
+
+-- ON DELETE attribute for the FOREIGN KEY ... REFERENCES
+FOREIGN KEY("artist_id") REFERENCES "artists"("id")
+ON DELETE ...
+-- RESTRICT, NO ACTION, SET NULL, SET DEFAULT, CASCADE
+-- ON DELETE CASCADE will remove the row with the deleted Foreign Key association
+
+
+-- UPDATING
+-- syntax:
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition; 
+
+-- stopped at 1 H 3 min
