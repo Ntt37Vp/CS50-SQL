@@ -95,3 +95,22 @@ SET column1 = value1, column2 = value2, ...
 WHERE condition; 
 
 -- stopped at 1 H 3 min
+UPDATE "created" 
+SET "artist_id" = (
+    SELECT "id" FROM "artists"
+    WHERE "name" = 'Li Yin'
+)
+WHERE "collection_id" = (
+    SELECT "id" FROM "collections"
+    WHERE "title" = 'Farmers working at Dawn'
+);
+
+
+-- TRIM
+trim(string, character)
+TRIM("title")
+-- UPPER
+upper(string)
+UPPER("title")
+
+-- continue at 1H17
