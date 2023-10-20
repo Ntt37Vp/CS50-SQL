@@ -114,3 +114,59 @@ upper(string)
 UPPER("title")
 
 -- continue at 1H17
+UPDATE "votes"
+SET "title"='FARMERS WORKING AT DAWN'
+WHERE "title"='FAMERS WORKING AT DAWN';
+-- using LIKE instead for the other typo entries for farmers working at dawn
+UPDATE "votes"
+SET "title" = 'FARMERS WORKING AT DAWN'
+WHERE "title" LIKE 'Fa%';
+-- using LIKE for the imaginative entries
+UPDATE "votes"
+SET "title" = 'IMAGINATIVE LANDSCAPE'
+WHERE "title" LIKE 'Imaginative%';
+
+
+-- TRIGGERS
+-- syntax
+CREATE TRIGGER name
+BEFORE DELETE ON table0
+FOR EACH ROW
+BEGIN ...;
+-- query
+END; 
+
+-- actual 
+-- let's create a "transaction" TABLE to capture the TRIGGERS
+-- in sqlite
+-- CREATE TABLE "transactions" (
+--     "id" INTEGER,
+--     "title" TEXT,
+--     "action" TEXT,
+--     PRIMARY KEY("id")
+-- );
+CREATE TRIGGER "sell"
+BEFORE DELETE ON "collections"
+FOR EACH ROW 
+BEGIN
+    INSERT INTO "transactions" ("title", "action")
+    VALUES (OLD."title", 'sold');
+END;
+-- buy TRIGGER
+CREATE TRIGGER "buy"
+AFTER INSERT ON "collections"
+FOR EACH ROW
+BEGIN
+    INSERT INTO "transactions" ("title", "action")
+    VALUES (NEW."title", 'bought');
+END;
+
+-- another implemenatation of soft deletion
+-- can be obtained by assigning/marking 0 or 1 on column "deleted"
+-- you can use alter
+ALTER TABLE table_name
+ADD column_name datatype; 
+-- 
+ALTER TABLE "collections"
+ADD COLUMN "delete" INTEGER DEFAULT 0;
+
