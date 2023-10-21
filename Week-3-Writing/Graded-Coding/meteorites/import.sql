@@ -66,7 +66,8 @@ CREATE TABLE "meteorites" (
 INSERT INTO "meteorites" ("name", "class", "mass", "discovery", "year", "lat", "long")
 SELECT "name", "class", "mass", "discovery", "year", "lat", "long"
 FROM "meteorites_temp"
-ORDER BY "year";
+ORDER BY "year", "name";
+-- this was the missing piece of the puzzle!
 
 -- drop temp table
 DROP TABLE "meteorites_temp";
