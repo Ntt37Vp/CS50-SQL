@@ -90,3 +90,59 @@ JOIN "books"
 ON "books"."id" = "ratings"."book_id"
 GROUP BY "ratings"."book_id";
 
+-- Temporary VIEW
+CREATE TEMPORARY VIEW "average_ratings_by_year" AS
+SELECT
+    "year",
+    ROUND(AVG("avg_rating"), 2) AS "rating"
+FROM "average_book_rating"
+GROUP BY "year";
+-- this temp view table "average_ratings_by_year" will be dropped once .quit is ran
+
+
+-- Common Table Expressions (CTE)
+-- is a VIEW that exist in the duration of a single query
+WITH cte_name AS (
+    SELECT ...
+), ...
+SELECT ...
+FROM table_name;
+
+-- an ex of CTE using the same scenario above of "average rating "
+-- the following CTE below has the same output as the process above:
+WITH "average_book_ratings" AS (
+    SELECT 
+        "book_id",
+        "title",
+        "year",
+        ROUND(AVG("rating"), 2) AS "Rating"
+    FROM "ratings"
+    JOIN "books"
+    ON "books"."id" = "ratings"."book_id"
+    GROUP BY "book_id"
+)
+SELECT "year", ROUND(AVG("Rating"), 2) AS "Avg_Rating"
+FROM "average_book_ratings"
+GROUP BY "year";
+
+
+-- PARTITIONING
+SELECT
+    "id",
+    "title"
+FROM books
+WHERE "year" = 2022;
+-- to save a table/view for this outout of books nominated in 2022:
+CREATE VIEW "2022_books" AS
+SELECT
+    "id",
+    "title"
+FROM "books"
+WHERE "year" = 2022;
+-- 2021
+CREATE VIEW "2021_books" AS
+SELECT
+    "id",
+    "title"
+FROM "books"
+WHERE "year" = 2021;
