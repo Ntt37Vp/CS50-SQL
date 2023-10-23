@@ -146,3 +146,22 @@ SELECT
     "title"
 FROM "books"
 WHERE "year" = 2021;
+
+
+-- SECURING
+-- use rideshare.db
+SELECT *
+FROM rides;
+-- to hide/omit rider column
+SELECT "id", "origin", "destination", 'Anonymous' AS 'rider'
+FROM rides;
+-- turn it into a VIEW
+CREATE VIEW "analysis" AS 
+SELECT "id", "origin", "destination", 'Anonymous' AS 'rider'
+FROM rides;
+
+
+-- Soft Deletions
+
+
+-- Triggers with VIEWS
