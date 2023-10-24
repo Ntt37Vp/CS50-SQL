@@ -162,6 +162,100 @@ FROM rides;
 
 
 -- Soft Deletions
-
+-- in a table where "deleted" items are marked as 1:
+SELECT * 
+FROM collections
+WHERE "deleted" = 0;
 
 -- Triggers with VIEWS
+-- testing mfa.db
+-- let's add "deleted" column to collections:
+ALTER TABLE "collections"
+ADD COLUMN "deleted" INTEGER DEFAULT 0;
+-- so... to soft delete an item
+UPDATE "collections"
+SET "deleted" = 1
+WHERE "title" = 'Farmers working at dawn';
+
+-- so let's create a VIEW
+CREATE VIEW "current_collections" AS
+SELECT "id", "title", "accession_number", "acquired"
+FROM "collections"
+WHERE "deleted" = 0;
+
+-- VIEWS cannot be modified
+-- use TRIGGER instead
+CREATE TRIGGER trigger_name
+INSTEAD OF DELETE ON view
+FOR EACH ROW
+BEGIN
+    ...;
+END;
+-- actual code
+CREATE TRIGGER "delete"
+INSTEAD OF DELETE ON "current_collections"
+FOR EACH ROW
+BEGIN
+    UPDATE "collections"
+    SET "deleted" = 1
+    WHERE "id" =  OLD."id";
+END;
+-- output:
+-- +----+-------------------------+------------------+------------+---------+
+-- | id |          title          | accession_number |  acquired  | deleted |
+-- +----+-------------------------+------------------+------------+---------+
+-- | 1  | Farmers working at dawn | 11.6152          | 1911-08-03 | 1       |
+-- | 2  | Imaginative landscape   | 56.496           |            | 1       |
+-- | 3  | Profusion of flowers    | 56.257           | 1956-04-12 | 0       |
+-- | 4  | Spring outing           | 14.76            | 1914-01-08 | 0       |
+-- +----+-------------------------+------------------+------------+---------+
+
+-- another TRIGGER (to add)
+CREATE TRIGGER another_trigger_name
+INSTEAD OF INSERT ON view
+FOR EACH ROW WHEN condition
+BEGIN
+    ...;
+END;
+-- actual code
+CREATE TRIGGER "insert_when_exists"
+INSTEAD OF INSERT ON "current_collections"
+FOR EACH ROW 
+WHEN NEW."accession_number" IN (
+    SELECT "accession_number"
+    FROM collections
+)
+BEGIN
+    UPDATE "collections"
+    SET "deleted" = 0
+    WHERE "accession_number" = NEW."accession_number";
+END;
+-- so if we try to insert an item back
+-- let's add Imaginative landscape back
+-- +----+-------------------------+------------------+------------+---------+
+-- | id |          title          | accession_number |  acquired  | deleted |
+-- +----+-------------------------+------------------+------------+---------+
+-- | 1  | Farmers working at dawn | 11.6152          | 1911-08-03 | 1       |
+-- | 2  | Imaginative landscape   | 56.496           |            | 1       |
+-- | 3  | Profusion of flowers    | 56.257           | 1956-04-12 | 0       |
+-- | 4  | Spring outing           | 14.76            | 1914-01-08 | 0       |
+-- +----+-------------------------+------------------+------------+---------+
+-- SELECT * FROM current_collections:
+-- only shows the 2 rows with 0 
+-- +----+----------------------+------------------+------------+
+-- | id |        title         | accession_number |  acquired  |
+-- +----+----------------------+------------------+------------+
+-- | 3  | Profusion of flowers | 56.257           | 1956-04-12 |
+-- | 4  | Spring outing        | 14.76            | 1914-01-08 |
+-- +----+----------------------+------------------+------------+
+
+INSERT INTO "current_collections" ("title", "accession_number", "acquired")
+VALUES ("Imaginative landscape", 56.496, NULL);
+-- output:
+-- +----+-----------------------+------------------+------------+
+-- | id |         title         | accession_number |  acquired  |
+-- +----+-----------------------+------------------+------------+
+-- | 2  | Imaginative landscape | 56.496           |            |
+-- | 3  | Profusion of flowers  | 56.257           | 1956-04-12 |
+-- | 4  | Spring outing         | 14.76            | 1914-01-08 |
+-- +----+-----------------------+------------------+------------+
