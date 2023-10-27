@@ -64,3 +64,13 @@ ON "people" ("name");
 
 
 -- COVERING INDEX
+-- is an index in w/c queried data can be retrieved from the index itself
+ CREATE INDEX "person_index" ON "stars" ("person_id", "movie_id");
+
+
+ -- B-Trees
+ -- INDEX use Balance Tree data structure
+ 
+ -- PARTIAL INDEX
+ -- index that only contains a subset of rows from a table
+ 
