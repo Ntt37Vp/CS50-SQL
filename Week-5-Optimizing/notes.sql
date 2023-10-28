@@ -110,3 +110,23 @@ UPDATE "accounts"
 SET "balance" = "balance" - 10
 WHERE "id" = 1;
 COMMIT;
+-- output:
+-- +----+---------+---------+
+-- | id |  name   | balance |
+-- +----+---------+---------+
+-- | 1  | Alice   | 0       |
+-- | 2  | Bob     | 30      |
+-- | 3  | Charlie | 30      |
+-- +----+---------+---------+
+
+-- say Alice (0 bal) wanted to transfer another 10
+-- this will break the schema CHECK constraint
+-- to revert, instead of "COMMIT", use "ROLLBACK"
+BEGIN TRANSACTION;
+UPDATE "accounts"
+SET "balance" = "balance" + 10
+WHERE "id" = 2;
+UPDATE "accounts"
+SET "balance" = "balance" - 10
+WHERE "id" = 1;
+ROLLBACK;
