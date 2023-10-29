@@ -130,3 +130,11 @@ UPDATE "accounts"
 SET "balance" = "balance" - 10
 WHERE "id" = 1;
 ROLLBACK;
+
+
+-- RACE CONDITION
+-- A race condition is an undesirable situation that occurs when a device or system attempts to perform two or more operations at the same time, 
+-- but because of the nature of the device or system, the operations must be done in the proper sequence to be done correctly.
+
+-- LOCKS
+-- Unlocked, Shared, Exclusive
