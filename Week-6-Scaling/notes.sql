@@ -173,26 +173,28 @@ CREATE TABLE "cards" (
 );
 -- schema:
 \d "cards"
--- let's create more tables
+-- let's create more tables:
 CREATE TABLE "stations" (
     "id" SERIAL,
     "name" VARCHAR(32) NOT NULL,
     "line" VARCHAR(32) NOT NULL,
     PRIMARY KEY("id")
 );
-
-CREATE TABLE "swipes" (
-    "type" swipe_type,
-    "datetime" ,
-    "amount"
-)
 -- ENUM is supported but we have to CREATE TYPE first
 CREATE TYPE "swipe_type"
 AS ENUM('enter', 'exit', 'deposit');
+-- swipe table
+CREATE TABLE "swipes" (
+    "id" SERIAL,
+    "type" swipe_type NOT NULL,
+    "datetime" TIMESTAMP NOT NULL DEFAULT now(),
+    "amount" NUMERIC(5, 2) NOT NULL CHECK("amount" != 0),
+    PRIMARY KEY("id")
+);
+-- to exit
+\q
 
-
-
--- Replication
+-- REPLICATION
 
 -- Sharding
 
