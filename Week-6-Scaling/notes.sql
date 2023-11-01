@@ -194,11 +194,21 @@ CREATE TABLE "swipes" (
 -- to exit
 \q
 
+
 -- REPLICATION
+-- Vertical and Horizontal scaling
+-- Replication: keeping copies of db on multiple servers
+-- single-leader, multi-leader, leaderless
+-- read replica: copy of the db for read
+-- either synchronous or asynchronous
+
 
 -- Sharding
+-- horizontal partition of data in a database or search engine. Each shard is held on a separate database server instance, to spread load.
+
 
 -- Access Control
+
 
 -- SQL Injections
 
