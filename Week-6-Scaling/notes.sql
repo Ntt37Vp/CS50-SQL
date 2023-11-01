@@ -225,8 +225,19 @@ SELECT * FROM Users WHERE `id` = 105 OR 1=1;
 
 -- Prepared Statements
 -- like input sanitation
-PREPARE name FROM statement;
+PREPARE `name` FROM statement;
 -- sample
 PREPARE `balance_check`
 FROM 'SELECT * FROM `accounts`
 WHERE `id` = ?';
+-- the ? will sanitate the request
+
+-- to assign a variable outside the SQL query (to simulate say, a user input) use @
+SET @id = 123;
+-- to run/call the prepared statement
+EXECUTE `balance_check` USING @id;
+-- this executes the prepared statement using the var @id
+-- malicious example attempt to inj 
+SET @id_new = '123 UNION SELECT * FROM `accounts`';
+EXECUTE `balance_check` USING @id_new;
+-- the prepared statement will prevent this attack
