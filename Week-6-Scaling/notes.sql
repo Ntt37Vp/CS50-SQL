@@ -208,6 +208,14 @@ CREATE TABLE "swipes" (
 
 
 -- Access Control
+-- MySQL Create New User
+CREATE USER 'carter'
+IDENTIFIED BY 'password';
+-- from Root , grant access to other user
+GRANT privilege, ... TO user;
+REVOKE privilege, ... TO user;
+-- example
+GRANT SELECT ON `rideshare`.`analysis` TO 'carter';
 
 
 -- SQL Injections
