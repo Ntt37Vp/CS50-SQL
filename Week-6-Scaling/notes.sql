@@ -219,6 +219,14 @@ GRANT SELECT ON `rideshare`.`analysis` TO 'carter';
 
 
 -- SQL Injections
-
+-- Use Prepared Statements to prevent SQL inj
+-- sample
+SELECT * FROM Users WHERE `id` = 105 OR 1=1;
 
 -- Prepared Statements
+-- like input sanitation
+PREPARE name FROM statement;
+-- sample
+PREPARE `balance_check`
+FROM 'SELECT * FROM `accounts`
+WHERE `id` = ?';
