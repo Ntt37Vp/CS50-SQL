@@ -3,17 +3,9 @@ CREATE TABLE IF NOT EXISTS "Providers" (
         "first_name"    TEXT NOT NULL,
         "last_name"     TEXT NOT NULL,
         "npi"   INTEGER UNIQUE,
-        "taxonomy_default"      TEXT,
-        PRIMARY KEY("id" AUTOINCREMENT)
-);
-
-CREATE TABLE IF NOT EXISTS "Claims" (
-        "id"    INTEGER,
-        "date_service"  NUMERIC NOT NULL,
-        "date_billed"   NUMERIC,
+        "specialty"      TEXT,
         PRIMARY KEY("id")
 );
-
 CREATE TABLE IF NOT EXISTS "Patients" (
         "id"    INTEGER,
         "first_name"    TEXT NOT NULL,
@@ -21,17 +13,27 @@ CREATE TABLE IF NOT EXISTS "Patients" (
         "date_birth"    NUMERIC,
         PRIMARY KEY("id")
 );
-
+CREATE TABLE IF NOT EXISTS "Claims" (
+        "id"    INTEGER,
+        "patient_id" INTEGER NOT NULL,
+        "provider_id" INTEGER NOT NULL,
+        "date_service"  NUMERIC NOT NULL,
+        "amount_billed" NUMERIC NOT NULL,
+        "cpt_codes" TEXT NOT NULL,
+        PRIMARY KEY("id"),
+        FOREIGN KEY("patient_id") REFERENCES "Patients"("id"),
+        FOREIGN KEY("provider_id") REFERENCES "Providers"("id")
+);
 CREATE TABLE IF NOT EXISTS "Procedures" (
         "id"    INTEGER,
-        "description"   TEXT,
-        "cpt"   TEXT,
+        "description"   TEXT NOT NULL,
+        "cpt"   TEXT NOT NULL,
+        "amount" NUMERIC NOT NULL,
         PRIMARY KEY("id")
 );
-
 CREATE TABLE IF NOT EXISTS "Diagnosis" (
         "id"    INTEGER,
-        "description"   INTEGER,
-        "icd10" INTEGER,
+        "description"   TEXT NOT NULL,
+        "icd10" TEXT NOT NULL,
         PRIMARY KEY("id")
 );
