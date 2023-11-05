@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS "Claims" (
         "provider_id" INTEGER NOT NULL,
         "date_service"  NUMERIC NOT NULL,
         "amount_billed" NUMERIC NOT NULL,
-        "cpt_codes" TEXT NOT NULL,
+        "procedure_codes" TEXT NOT NULL,
+        "diagnosis_codes" TEXT NOT NULL,
         PRIMARY KEY("id"),
         FOREIGN KEY("patient_id") REFERENCES "Patients"("id"),
         FOREIGN KEY("provider_id") REFERENCES "Providers"("id")
@@ -27,13 +28,12 @@ CREATE TABLE IF NOT EXISTS "Claims" (
 CREATE TABLE IF NOT EXISTS "Procedures" (
         "id"    INTEGER,
         "description"   TEXT NOT NULL,
-        "cpt"   TEXT NOT NULL,
-        "amount" NUMERIC NOT NULL,
+        "cpt_code"   TEXT NOT NULL,
         PRIMARY KEY("id")
 );
 CREATE TABLE IF NOT EXISTS "Diagnosis" (
         "id"    INTEGER,
         "description"   TEXT NOT NULL,
-        "icd10" TEXT NOT NULL,
+        "icd10_code" TEXT NOT NULL,
         PRIMARY KEY("id")
 );
