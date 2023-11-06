@@ -27,13 +27,13 @@ CREATE TABLE IF NOT EXISTS "Claims" (
 );
 CREATE TABLE IF NOT EXISTS "Procedures" (
         "id"    INTEGER,
-        "description"   TEXT NOT NULL,
         "cpt_code"   TEXT NOT NULL,
+        "description"   TEXT NOT NULL,
         PRIMARY KEY("id")
 );
 CREATE TABLE IF NOT EXISTS "Diagnosis" (
         "id"    INTEGER,
-        "description"   TEXT NOT NULL,
         "icd10_code" TEXT NOT NULL,
+        "description"   TEXT NOT NULL,
         PRIMARY KEY("id")
 );
