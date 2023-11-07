@@ -5,18 +5,23 @@ By Kevin Jamito
 Video overview: <URL>
 
 ## Scope
-My project is a mock representation of a medical (billing) claims tracking for a healthcare provider's office.
+My project is a simple representation of a medical (billing) claims tracking in a typical US healthcare provider's office.
 
-* The purpose of this database is to represent a medical billing software tracking medical claims
-* Which people, places, things, etc. are you including in the scope of your database?
-* Which people, places, things, etc. are *outside* the scope of your database?
+* The purpose of this database is to track the medical claims submitted by the medical providers.
+* The medical claims represented on this database are claim forms submitted by professional (HCFA1500)
+* For simplicity, facility-based coding are not intended to be used in this setting.
+* The database uses ICD-10-CM and CPT Level 1 which primarily used in the US. Countries outside the US may not use this standard.
 
 ## Functional Requirements
 
 Here are the functional requirements of the project
 
-* Authorized users such as the medical practice owner(doctor), medical billing manager or the accounts receivable claims analyst can query information about claims
-* What's beyond the scope of what a user should be able to do with your database?
+* The database is using SQLite3 as the DBMS
+* It includes tables for the Medical Providers as well as the Patients they have seen
+* It also includes the current diagnosis (ICD-10-CM) and procedure (CPT Level 1) codes obtained from CMS.gov
+* The center of this database is the Claims table, wherein the tables are joined. 
+* Authorized users such as the medical practice owner (doctors), billing manager or the accounts receivable claims analyst can query information about the Claims
+
 
 ## Representation
 
@@ -63,6 +68,6 @@ In this section you should include your entity relationship diagram and describe
 
 ## Limitations
 
-* This project is limited to simple attributes of the entities listed on Entities section. 
-
 * This database may not fully represent the entire Revenue Cycle Management in the area of Accounts Receivable Management.
+* This project is limited to simple attributes of the entities listed on Entities section. 
+* The scope of this simple database is limited to minimum and necessary information needed to describe a Claim encounter. 
