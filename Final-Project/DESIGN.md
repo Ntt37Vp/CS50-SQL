@@ -31,13 +31,15 @@ Here are the entities that are represented in my database
 
 1. Providers
     * The attributes are `id`, `first_name`, `last_name`, `npi`, and `specialty`
-    * These are the basic information needed in describing a medical provider
-    * Why did you choose the constraints you did?
+    * `id` is the primary key to distinguish doctors from one another
+    * `first_name`, `last_name` are set to NOT NULL and is using TEXT data type
+    * `npi` can be NULL and is set to UNIQUE, INTEGER
+    * `specialty`can be NULL and is using TEXT data type
 
 2. Patients
     * The attributes are `id`, `first_name`, `last_name` and `date_birth`
     * These are the basic attributes in describing a patient
-    * Why did you choose the constraints you did?
+    * All fields are required thus set to NOT NULL
 
 3. Claims
     * The attributes are `id`, `patient_id`, `provider_id` and `date_service`, `amount_billed`, `procedure_codes` and `diagnosis_codes`

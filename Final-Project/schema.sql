@@ -54,3 +54,9 @@ CREATE TABLE "Diagnosis" (
         "description" TEXT NOT NULL,
         PRIMARY KEY("id")
 );
+
+-- TODO
+CREATE INDEX
+
+-- TODO
+CREATE VIEW
