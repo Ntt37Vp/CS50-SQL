@@ -20,7 +20,8 @@ CREATE TABLE "Patients" (
         PRIMARY KEY("id")
 );
 
--- 
+-- The Claims table contains the medical claims associated per patient and the provider 
+-- All fields cannot be NULL
 CREATE TABLE "Claims" (
         "id" INTEGER,
         "patient_id" INTEGER NOT NULL,
@@ -56,7 +57,7 @@ CREATE TABLE "Diagnosis" (
 );
 
 -- TODO
-CREATE INDEX
+-- CREATE INDEX
 
--- TODO
-CREATE VIEW
+-- -- TODO
+-- CREATE VIEW

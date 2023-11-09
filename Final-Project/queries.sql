@@ -1,19 +1,25 @@
--- In this SQL file, write (and comment!) the typical SQL queries users will run on your database
-
 -- How many patients do we have?
-SELECT COUNT(*) FROM "Patients";
+SELECT COUNT(*) AS "Patient Count"
+FROM "Patients";
+-- How many patients do we have?
+SELECT COUNT(*) AS "Provider Count"
+FROM "Providers";
+
 -- Show all records from Providers table
 SELECT * FROM "Providers";
 
--- TODO
-INSERT INTO "Claims"()
-VALUES()
-
 -- Update Specialty 
 UPDATE "Providers"
-SET "specialty" = "ENT"
-WHERE "specialty" = "Ear Nose and Throat";
+SET "specialty" = "Ear Nose and Throat"
+WHERE "specialty" = "ENT";
 
 -- Remove Resident Doctors
 DELETE FROM "Providers"
 WHERE "specialty" = "Resident";
+
+-- show the updated Providers table
+SELECT * FROM "Providers";
+
+-- TODO
+-- INSERT INTO "Claims"()
+-- VALUES()
