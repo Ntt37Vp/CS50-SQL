@@ -20,6 +20,6 @@ WHERE "specialty" = "Resident";
 -- show the updated Providers table
 SELECT * FROM "Providers";
 
--- TODO
--- INSERT INTO "Claims"()
--- VALUES()
+-- insert new claim entry
+INSERT INTO "Claims" ("patient_id","provider_id","date_service","amount_billed","procedure_codes","diagnosis_codes")
+VALUES(5,5,"5/1/2022",500.00,5,5);

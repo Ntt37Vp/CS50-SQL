@@ -32,7 +32,9 @@ CREATE TABLE "Claims" (
         "diagnosis_codes" TEXT NOT NULL,
         PRIMARY KEY("id"),
         FOREIGN KEY("patient_id") REFERENCES "Patients"("id"),
-        FOREIGN KEY("provider_id") REFERENCES "Providers"("id")
+        FOREIGN KEY("provider_id") REFERENCES "Providers"("id"),
+        FOREIGN KEY("procedure_codes") REFERENCES "Procedures"("id"),
+        FOREIGN KEY("diagnosis_codes") REFERENCES "Diagnosis"("id")
 );
 
 -- The Procedures table lists the medical, surgical, and diagnostic services performed by the Medical Providers
@@ -56,8 +58,13 @@ CREATE TABLE "Diagnosis" (
         PRIMARY KEY("id")
 );
 
--- TODO
--- CREATE INDEX
+-- CREATE INDEX on Injection Procedures
+ CREATE INDEX "inj"
+ ON "Procedures" ("description")
+ WHERE "description" LIKE '%inj%';
 
--- -- TODO
--- CREATE VIEW
+-- CREATE VIEW on arthritis diagnosis for reference
+CREATE VIEW arthritis AS
+SELECT *
+FROM Diagnosis
+WHERE "description" LIKE '%arthritis%';
