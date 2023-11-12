@@ -2,7 +2,7 @@
 
 By Kevin Jamito
 
-Video overview: <URL>
+Video overview: <https://youtu.be/3QlSjvK-1pg>
 
 ## Scope
 My project is a simple representation of a medical (billing) claims tracking in a typical US healthcare provider's office.
