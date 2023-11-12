@@ -9,18 +9,16 @@ My project is a simple representation of a medical (billing) claims tracking in 
 
 * The purpose of this database is to track the medical claims submitted by the medical providers.
 * The medical claims represented on this database are claim forms submitted by professional (HCFA1500)
-* For simplicity, facility-based coding are not intended to be used in this setting.
-* The database uses ICD-10-CM and CPT Level 1 which primarily used in the US. Countries outside the US may not use this standard.
+* The database uses ICD-10-CM and CPT Level 1 which primarily used in the US. 
 
 ## Functional Requirements
 
 Here are the functional requirements of the project
 
 * The database is using SQLite3 as the DBMS
-* It includes tables for the Medical Providers as well as the Patients they have seen
-* It also includes the current diagnosis (ICD-10-CM) and procedure (CPT Level 1) codes obtained from CMS.gov
-* The center of this database is the Claims table, wherein the tables are joined. 
 * Authorized users such as the medical practice owner (doctors), billing manager or the accounts receivable claims analyst can query information about the Claims
+* It also includes the current diagnosis (ICD-10-CM) and procedure (CPT Level 1) codes obtained from CMS.gov
+* The center of this database is the Claims table. It's where most tables are joined. 
 
 
 ## Representation
@@ -43,18 +41,18 @@ Here are the entities that are represented in my database
 
 3. Claims
     * The attributes are `id`, `patient_id`, `provider_id` and `date_service`, `amount_billed`, `procedure_codes` and `diagnosis_codes`
-    * Why did you choose the types you did?
+    * The Foreign Keys on Claims table are `patient_id`, `provider_id`, `procedure_codes` and `diagnosis_codes`
     * Why did you choose the constraints you did?
 
 4. Procedures
     * The attributes are `id`, `description` and `cpt_code`
     * These are the basic representation of procedure
-    * Why did you choose the constraints you did?
+    * In the future versions or improvement, one can expand this table to include more information such as pricing or administrative information
 
 5. Diagnosis
     * The attributes are `id`, `description` and `icd10_code`
     * These are the basic representation of diagnosis
-    * Why did you choose the constraints you did?
+    * Same with the Procedures, one can expand this table to include more information such as clinical or administrative information
 
 ### Relationships
 
@@ -66,7 +64,10 @@ In this section you should include your entity relationship diagram and describe
 
 ## Optimizations
 
-* Which optimizations (e.g., indexes, views) did you create? Why?
+* Only 1 Index was made for now for demonstration: "inj" index
+* This indexes the Procedure with "inj" or injections procedure since the sample medical practice uses multiple injection procedures in the queries
+* Only 1 View was created for this project: "arthritis" view
+* This view shows all the Diagnosis with the word "arthritis" on it
 
 ## Limitations
 
